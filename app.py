@@ -32,9 +32,7 @@ def get_item_links(search_query):
 
     # gets content of the webpage (get request)
     response = requests.get(generate_amazon_link(search_query), headers=headers)
-    r= requests.get('https://httpbin.org/headers',headers=headers)
-    st.write(r.text)
-    print(response)
+
     # creating BeautifulSoup object to read the data of the webpage
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -64,7 +62,6 @@ def get_item_links(search_query):
 
         # printing title with hyperlink
         column[1].write(f"[{title}]({url})")
-    st.write(r.text)
 
 # importing the ML model
 pipe = pickle.load(open('pipe.pkl', 'rb'))
