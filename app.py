@@ -33,6 +33,7 @@ def get_item_links(search_query):
     # gets content of the webpage (get request)
     response = requests.get(generate_amazon_link(search_query), headers=headers)
     r= requests.get('https://httpbin.org/headers')
+    st.write(r.text)
     print(response)
     # creating BeautifulSoup object to read the data of the webpage
     soup = BeautifulSoup(response.content, 'html.parser')
