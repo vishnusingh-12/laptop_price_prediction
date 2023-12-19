@@ -27,8 +27,8 @@ def get_item_links(search_query):
     # header contains User Agent which is to make sure that the website responds to the request thinking
     # that the request is from a real browser(which it is )
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
-                      'Chrome/120.0.0.0 Safari/537.36'}
+        'Referer': 'https://www.google.com',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
 
     # gets content of the webpage (get request)
     response = requests.get(generate_amazon_link(search_query), headers=headers)
