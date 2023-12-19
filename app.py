@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def generate_flip_link(search_query):
+def generate_amazon_link(search_query):
     """
     Generates and returns an amazon search link based on search query for data scraping
 
@@ -14,7 +14,7 @@ def generate_flip_link(search_query):
     :return: an amazon search link
     """
     # adding search query to base URL and returning
-    return "https://www.flipkart.com/search?q=laptop" + search_query
+    return "https://www.amazon.in/s?k=laptop" + search_query
 
 
 def get_item_links(search_query):
@@ -27,23 +27,24 @@ def get_item_links(search_query):
     # header contains User Agent which is to make sure that the website responds to the request thinking
     # that the request is from a real browser(which it is )
     headers = {
-
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
+                      'Chrome/120.0.0.0 Safari/537.36'}
 
     # gets content of the webpage (get request)
-    response = requests.get(generate_flip_link(search_query), headers=headers)
+    response = requests.get(generate_amazon_link(search_query), headers=headers)
     print(response)
     # creating BeautifulSoup object to read the data of the webpage
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # getting all the links present on the webpage (first links are the links of the products )
-    links = soup.find_all('a', attrs={'class': '_1fQZEK'})
+    links = soup.find_all('a', attrs={
+        'class': 'a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal'})
 
     # getting titles of all products (inspect the webpage you are scraping)
-    titles = soup.find_all('div', attrs={'class': '_4rR01T'})
+    titles = soup.find_all('span', attrs={'class': 'a-size-medium a-color-base a-text-normal'})
 
     # getting images of all products
-    images = soup.find_all('img', attrs={'class': '_396cs4'})
+    images = soup.find_all('img', attrs={'class': 's-image'})
 
     # printing the top three products with images and links to amazon
     for i in range(2,5):
@@ -152,10 +153,10 @@ if st.button('Predict Price'):
     st.markdown("---")
 
     # printing similar laptops
-    st.markdown("### Similar laptops on Flipkart")
+    st.markdown("### Similar laptops on Amazon")
 
     # If company is apple change search query to Apple Macbook and call the get item links function
     if company == 'Apple':
-        get_item_links(f'Apple%20Macbook%20{ram}%20GB%20RAM')
+        get_item_links(f'Apple+Macbook+{ram}+GB+RAM')
     else:
-        get_item_links(f'{company}%20{type}%20{ssd}%20SSD%20{ram}%20GB%20RAM%20{cpu}%20{gpu}')
+        get_item_links(f'{company}+{type}+{ssd}+SSD+{ram}+GB+RAM+{cpu}+{gpu}')
