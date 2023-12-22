@@ -24,7 +24,7 @@ The deployed app on Render can be accessed through the following <a href="https:
 
 
 ## Technologies
-<img src="https://raw.githubusercontent.com/vishnusingh-12/drowsiness-detection/master/readme/techs.PNG">
+<img src="https://raw.githubusercontent.com/vishnusingh-12/laptop_price_prediction/master/readme/techs.PNG">
 
 ## Support
 
