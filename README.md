@@ -7,9 +7,8 @@
 - Deployed on Render. https://laptop-price-iq22.onrender.com 
 
 ## Screenshots
-
-![App Screenshots](https://raw.githubusercontent.com/vishnusingh-12/laptop_price_prediction/master/readme/Capture.PNG)
-![App Screenshots](https://raw.githubusercontent.com/vishnusingh-12/laptop_price_prediction/master/readme/Capture2.PNG)
+<img width=700 src="https://raw.githubusercontent.com/vishnusingh-12/laptop_price_prediction/master/readme/Capture.PNG">
+<img width=700 src="https://raw.githubusercontent.com/vishnusingh-12/laptop_price_prediction/master/readme/Capture2.PNG">
 
 
 
