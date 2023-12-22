@@ -28,40 +28,51 @@ def get_item_links(search_query):
     # that the request is from a real browser(which it is )
     headers = {
         'Referer': 'https://www.google.com',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Sec-Ch-Ua-Platform': 'Windows',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin',
+        'authority': 'www.amazon.in',
+        'method': 'GET',
+        'scheme': 'https',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
 
     # gets content of the webpage (get request)
     response = requests.get(generate_amazon_link(search_query), headers=headers)
-
-    # creating BeautifulSoup object to read the data of the webpage
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    # getting all the links present on the webpage (first links are the links of the products )
-    links = soup.find_all('a', attrs={
-        'class': 'a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal'})
-
-    # getting titles of all products (inspect the webpage you are scraping)
-    titles = soup.find_all('span', attrs={'class': 'a-size-medium a-color-base a-text-normal'})
-
-    # getting images of all products
-    images = soup.find_all('img', attrs={'class': 's-image'})
-
-    # printing the top three products with images and links to amazon
-    for i in range(2,5):
-        # extracting text from each title html
-        title = titles[i].text
-
-        # extracting image url from each url
-        url = 'https://www.amazon.in' + links[i].get('href')
-
-        # columns used to print text next to image and not below the image
-        column = st.columns([1, 2])  # Adjust the width ratios as needed
-
-        # printing image
-        column[0].image(images[i].get('src'), width=200)
-
-        # printing title with hyperlink
-        column[1].write(f"[{title}]({url})")
+    if response.status_code==200:
+        # creating BeautifulSoup object to read the data of the webpage
+        soup = BeautifulSoup(response.content, 'html.parser')
+    
+        # getting all the links present on the webpage (first links are the links of the products )
+        links = soup.find_all('a', attrs={
+            'class': 'a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal'})
+    
+        # getting titles of all products (inspect the webpage you are scraping)
+        titles = soup.find_all('span', attrs={'class': 'a-size-medium a-color-base a-text-normal'})
+    
+        # getting images of all products
+        images = soup.find_all('img', attrs={'class': 's-image'})
+    
+        # printing the top three products with images and links to amazon
+        for i in range(2,5):
+            # extracting text from each title html
+            title = titles[i].text
+    
+            # extracting image url from each url
+            url = 'https://www.amazon.in' + links[i].get('href')
+    
+            # columns used to print text next to image and not below the image
+            column = st.columns([1, 2])  # Adjust the width ratios as needed
+    
+            # printing image
+            column[0].image(images[i].get('src'), width=200)
+    
+            # printing title with hyperlink
+            column[1].write(f"[{title}]({url})")
+    else:
+        st.markdown('##### Server did not respond. Either amazon.in is overloaded or blocking our request. This happens as amazon.in can block traffic from sources like render. Try changing headers' )
 
 # importing the ML model
 pipe = pickle.load(open('pipe.pkl', 'rb'))
