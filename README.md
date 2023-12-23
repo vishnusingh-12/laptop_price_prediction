@@ -12,7 +12,7 @@
 
 
 
-## Deployment
+## Usage
 <pre>git clone  https://github.com/vishnusingh-12/laptop_price_prediction
 cd laptop_price_prediction
 pip install -r requirements.txt
