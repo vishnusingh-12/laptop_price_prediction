@@ -56,7 +56,7 @@ def get_item_links(search_query):
         images = soup.find_all('img', attrs={'class': 's-image'})
     
         # printing the top three products with images and links to amazon
-        for i in range(2,5):
+        for i in range(3):
             # extracting text from each title html
             title = titles[i].text
     
